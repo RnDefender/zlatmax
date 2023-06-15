@@ -1,0 +1,21 @@
+name: Cache Policy
+
+on:
+  push:
+    branches:
+      - main  # Измените это в соответствии с названием вашей ветки
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set cache headers
+      run: |
+        echo "cache-control: max-age=2592000, public" >> $GITHUB_WORKSPACE/.github/workflows/cache_headers.txt
+        cp $GITHUB_WORKSPACE/.github/workflows/cache_headers.txt $GITHUB_WORKSPACE/
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
